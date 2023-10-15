@@ -118,6 +118,11 @@ static bool check_cpu_isolated(int cpu)
 {
 	return false;
 }
+
+static inline uint64_t sched_lpm_disallowed_time(int cpu)
+{
+	return 0;
+}
 #endif
 
 #ifdef CONFIG_MSM_PM
