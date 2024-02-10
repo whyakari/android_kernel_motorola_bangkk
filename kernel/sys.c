@@ -1208,6 +1208,33 @@ DECLARE_RWSEM(uts_sem);
 #define override_architecture(name)	0
 #endif
 
+#ifdef CONFIG_UNAME_OVERRIDE
+static void override_custom_release(char __user *release, size_t len)
+{
+	char *buf;
+
+	buf = kstrdup_quotable_cmdline(current, GFP_KERNEL);
+	if (buf == NULL)
+		return;
+
+	if (strstr(buf, CONFIG_UNAME_OVERRIDE_TARGET)) {
+		copy_to_user(release, CONFIG_UNAME_OVERRIDE_STRING,
+			       strlen(CONFIG_UNAME_OVERRIDE_STRING) + 1);
+	}
+#ifdef CONFIG_KSU	
+	if (strstr(buf, "me.weishu.kernelsu")) {
+		char easteregg[50];
+		strcpy(easteregg, UTS_RELEASE);
+		strcat(easteregg, " // path_umount: ✅");
+		copy_to_user(release, easteregg,
+			       strlen(easteregg) + 1);
+	}
+#endif	
+	kfree(buf);
+
+}
+#endif
+
 /*
  * Work around broken programs that cannot handle "Linux 3.0".
  * Instead we map 3.x to 2.6.40+x, so e.g. 3.0 would be 2.6.40
