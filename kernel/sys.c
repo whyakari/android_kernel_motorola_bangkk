@@ -45,6 +45,10 @@
 #include <linux/mm.h>
 #include <linux/mempolicy.h>
 
+#ifdef CONFIG_UNAME_OVERRIDE
+#include <linux/string_helpers.h>
+#endif
+
 #include <linux/compat.h>
 #include <linux/syscalls.h>
 #include <linux/kprobes.h>
@@ -1275,7 +1279,9 @@ SYSCALL_DEFINE1(newuname, struct new_utsname __user *, name)
 	up_read(&uts_sem);
 	if (copy_to_user(name, &tmp, sizeof(tmp)))
 		return -EFAULT;
-
+#ifdef CONFIG_UNAME_OVERRIDE	
+override_custom_release(name->release, sizeof(name->release));
+#endif
 	if (override_release(name->release, sizeof(name->release)))
 		return -EFAULT;
 	if (override_architecture(name))
