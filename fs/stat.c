@@ -175,8 +175,7 @@ int vfs_statx(int dfd, const char __user *filename, int flags,
 	struct path path;
 	int error = -EINVAL;
 	unsigned int lookup_flags = LOOKUP_FOLLOW | LOOKUP_AUTOMOUNT;
-
-        #ifdef CONFIG_KSU
+	#ifdef CONFIG_KSU
 	ksu_handle_stat(&dfd, &filename, &flags);
 	#endif
 
