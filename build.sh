@@ -15,16 +15,6 @@ if [ -z "$DEVICE" ]; then
 export DEVICE=g84
 fi
 
-if [[ -z "$1" || "$1" = "-c" ]]; then
-echo "Clean Build"
-rm -rf out
-elif [ "$1" = "-d" ]; then
-echo "Dirty Build"
-else
-echo "Error: Set $1 to -c or -d"
-exit 1
-fi
-
 ARGS='
 CC=clang
 LD='${LLVM_DIR}/ld.lld'
