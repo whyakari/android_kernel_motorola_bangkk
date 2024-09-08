@@ -20,7 +20,7 @@ check_and_install "bsdtar" "libarchive-tools"
 check_and_install "wget" "wget"
 check_and_install "cpio" "cpio"
 check_and_install "flex" "flex" 
-check_and install "bc" "bc"
+check_and_install "bc" "bc"
 
 echo 'Download antman and sync'
 bash <(curl -s "https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman") -S=11032023 # sync neutron clang 17
