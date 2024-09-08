@@ -10,23 +10,29 @@ check_and_install() {
   fi
 }
 
-mkdir -p toolchain
-cd toolchain
+if [ -d "toolchain" ]; then
+  echo "Toolchain already exists. Skipping download."
+else
+  echo "Toolchain not found. Downloading and setting up..."
+  mkdir -p toolchain
+  cd toolchain
 
-echo 'Checking for system requirements...'
+  echo 'Checking for system requirements...'
 
-check_and_install "zstd" "zstd"
-check_and_install "bsdtar" "libarchive-tools"
-check_and_install "wget" "wget"
-check_and_install "cpio" "cpio"
-check_and_install "flex" "flex" 
-check_and_install "bc" "bc"
+  check_and_install "zstd" "zstd"
+  check_and_install "bsdtar" "libarchive-tools"
+  check_and_install "wget" "wget"
+  check_and_install "cpio" "cpio"
+  check_and_install "flex" "flex"
+  check_and_install "bc" "bc"
 
-echo 'Download antman and sync'
-bash <(curl -s "https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman") -S=11032023 # sync neutron clang 17
+  echo 'Download antman and sync'
+  bash <(curl -s "https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman") -S=11032023 # sync neutron clang 17
 
-echo 'Patch for glibc'
-bash <(curl -s "https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman") --patch=glibc
+  echo 'Patch for glibc'
+  bash <(curl -s "https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman") --patch=glibc
 
-echo 'Done'
+  cd ..
+  echo 'Done'
+fi
 
