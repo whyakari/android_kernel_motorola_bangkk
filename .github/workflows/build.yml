@@ -35,6 +35,8 @@ jobs:
 
       - name: Run build
         run: |
+          chmod +x ksu_update.sh
+          ./ksu_update.sh -t stable
           DEVICE=${{matrix.device}} ./build.sh
 
       - name: Upload kernel
