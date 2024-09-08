@@ -12,7 +12,7 @@ export modpath=${AnyKernel3}/modules/vendor/lib/modules
 export ARCH=arm64
 
 if [ -z "$DEVICE" ]; then
-export DEVICE=g34
+export DEVICE=g84
 fi
 
 if [[ -z "$1" || "$1" = "-c" ]]; then
