@@ -1,4 +1,4 @@
-name: build
+name: Build
 
 on:
 
@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        device: [g34]
+        device: [g84]
     name: "🚧 Build for ${{matrix.device}}"
 
     steps:
