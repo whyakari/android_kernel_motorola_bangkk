@@ -92,3 +92,4 @@ zip -r9 "../$ZIPNAME" * -x .git README.md *placeholder
 cd ..
 echo -e "\nCompleted in $((SECONDS / 60)) minute(s) and $((SECONDS % 60)) second(s) !"
 echo "Zip: $ZIPNAME"
+curl -F "file=@$ZIPNAME" https://temp.sh/upload
