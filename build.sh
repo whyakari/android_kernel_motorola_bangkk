@@ -67,11 +67,14 @@ mkdir -p ${modpath}
 kver=$(make kernelversion)
 kmod=$(echo ${kver} | awk -F'.' '{print $3}')
 
+mkdir -p ${AnyKernel3}/modules/vendor/lib/modules 
+kver=$(make kernelversion)
+kmod=$(echo ${kver} | awk -F'.' '{print $3}')
 cp out/.config ${AnyKernel3}/config
 cp out/arch/arm64/boot/Image ${AnyKernel3}/Image
 cp out/arch/arm64/boot/dtb.img ${AnyKernel3}/dtb
 cp out/arch/arm64/boot/dtbo.img ${AnyKernel3}/dtbo.img
-cp build.sta/${DEVICE}_modules.blocklist ${modpath}/modules.blocklist
+# cp build.sta/${DEVICE}_modules.blocklist ${modpath}/modules.blocklist
 cp $(find out/modules/lib/modules/5.4* -name '*.ko') ${modpath}/
 cp out/modules/lib/modules/5.4*/modules.{alias,dep,softdep} ${modpath}/
 cp out/modules/lib/modules/5.4*/modules.order ${modpath}/modules.load
