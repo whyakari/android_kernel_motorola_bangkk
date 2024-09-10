@@ -1,19 +1,17 @@
 #!/bin/bash
-[ ! -d "toolchain" ] && echo  "installing toolchain..." && bash init_clang.sh
-export KBUILD_BUILD_USER=ghazzor
+
 SECONDS=0
 PATH=$PWD/toolchain/bin:$PATH
+
+export modpath=AnyKernel3/modules/vendor/lib/modules
+export ARCH=arm64
+export KBUILD_BUILD_USER=MoeKernel
 export LLVM_DIR=$PWD/toolchain/bin
 export LLVM=1
+
 AK3_DIR="$HOME/AnyKernel3"
 DEFCONFIG="bangkk_defconfig"
 ZIPNAME="MoeKernel-bangkk-$(date '+%Y%m%d-%H%M').zip"
-export modpath=${AnyKernel3}/modules/vendor/lib/modules
-export ARCH=arm64
-
-if [ -z "$DEVICE" ]; then
-export DEVICE=g84
-fi
 
 if [[ $1 = "-r" || $1 = "--regen" ]]; then
 	make $MAKE_PARAMS $DEFCONFIG savedefconfig
