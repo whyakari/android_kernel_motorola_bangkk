@@ -110,10 +110,6 @@ elif ! git clone -q https://github.com/MoeKernel/AnyKernel3 -b bangkk; then
 	exit 1
 fi
 
-rm -rf ${modpath}/*
-rm -rf AnyKernel3/{Image, dtb, dtbo.img}
-rm -rf AnyKernel3/*.zip
-
 mkdir -p ${modpath}
 kver=$(make kernelversion)
 kmod=$(echo ${kver} | awk -F'.' '{print $3}')
@@ -144,3 +140,4 @@ cd ..
 echo -e "\nCompleted in $((SECONDS / 60)) minute(s) and $((SECONDS % 60)) second(s) !"
 echo "Zip: $ZIPNAME"
 curl -F "file=@$ZIPNAME" https://temp.sh/upload
+rm -rf AnyKernel3
