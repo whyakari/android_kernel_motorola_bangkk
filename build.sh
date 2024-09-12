@@ -8,7 +8,10 @@ PATH=$PWD/toolchain/bin:$PATH
 
 export modpath=AnyKernel3/modules/vendor/lib/modules
 export ARCH=arm64
-export KBUILD_BUILD_USER=MoeKernel
+
+export KBUILD_BUILD_USER=Moe
+export KBUILD_BUILD_HOST=Nyan
+
 export LLVM_DIR=$PWD/toolchain/bin
 export LLVM=1
 
