@@ -27,6 +27,43 @@ else
     make O=out ARCH=arm64 $DEFCONFIG
 fi
 
+url_ksu_update="https://github.com/MoeKernel/scripts/raw/ksu/ksu_update.sh"
+url_init_clang="https://github.com/MoeKernel/scripts/raw/ksu/init_clang.sh"
+
+file_ksu_update="$PWD/ksu_update.sh"
+file_init_clang="$PWD/init_clang.sh"
+
+download_chmod_and_execute() {
+    local url="$1"
+    local file="$2"
+
+    if [ ! -f "$file" ]; then
+        echo "File $file not found. Downloading..."
+        wget "$url" -O "$file"
+        if [ $? -eq 0 ]; then
+            echo "Download of $file completed."
+            chmod +x "$file"
+            echo "Execute permissions added to $file."
+        else
+            echo "Failed to download $file."
+            return 1
+        fi
+    else
+        echo "File $file already exists."
+    fi
+
+    echo "Executing $file..."
+    "$file"
+    if [ $? -eq 0 ]; then
+        echo "$file executed successfully."
+    else
+        echo "Failed to execute $file."
+    fi
+}
+
+download_chmod_and_execute "$url_ksu_update" "$file_ksu_update"
+download_chmod_and_execute "$url_init_clang" "$file_init_clang"
+
 ARGS='
 CC=clang
 LD='${LLVM_DIR}/ld.lld'
