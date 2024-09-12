@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Compile script for MoeKernel
+# Copyright (C) 2024 Shoiya A.
 
 SECONDS=0
 PATH=$PWD/toolchain/bin:$PATH
@@ -12,13 +15,6 @@ export LLVM=1
 AK3_DIR="$HOME/AnyKernel3"
 DEFCONFIG="bangkk_defconfig"
 ZIPNAME="MoeKernel-bangkk-$(date '+%Y%m%d-%H%M').zip"
-
-if [[ $1 = "-r" || $1 = "--regen" ]]; then
-	make $MAKE_PARAMS $DEFCONFIG savedefconfig
-	cp out/defconfig arch/arm64/configs/$DEFCONFIG
-	echo -e "\nSuccessfully regenerated defconfig at $DEFCONFIG"
-	exit
-fi
 
 if [[ $1 = "-m" || $1 = "--menu" ]]; then
     mkdir -p out
@@ -48,6 +44,13 @@ LLVM_DIS='${LLVM_DIR}/llvm-dis'
 LLVM_NM='${LLVM_DIR}/llvm-nm'
 LLVM=1
 '
+
+if [[ $1 = "-r" || $1 = "--regen" ]]; then
+	make $ARGS $DEFCONFIG savedefconfig
+	cp out/defconfig arch/arm64/configs/$DEFCONFIG
+	echo -e "\nSuccessfully regenerated defconfig at $DEFCONFIG"
+	exit
+fi
 
 make ${ARGS} O=out $DEFCONFIG moto.config
 make ${ARGS} O=out -j$(nproc)
