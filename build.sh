@@ -100,8 +100,8 @@ make O=out ${ARGS} -j$(nproc) INSTALL_MOD_PATH=modules INSTALL_MOD_STRIP=1 modul
 echo -e "\nKernel compiled succesfully! Zipping up...\n"
 if [ -d "$AK3_DIR" ]; then
 	cp -r $AK3_DIR AnyKernel3
-	git -C AnyKernel3 checkout bangkk &> /dev/null
-elif ! git clone -q https://github.com/MoeKernel/AnyKernel3 -b bangkk; then
+	git -C AnyKernel3 checkout bangkk_noksu &> /dev/null
+elif ! git clone -q https://github.com/MoeKernel/AnyKernel3 -b bangkk_noksu; then
 	echo -e "\nAnyKernel3 repo not found locally and couldn't clone from GitHub! Aborting..."
 	exit 1
 fi
