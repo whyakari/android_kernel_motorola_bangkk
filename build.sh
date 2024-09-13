@@ -17,7 +17,7 @@ export LLVM=1
 
 AK3_DIR="$HOME/AnyKernel3"
 DEFCONFIG="bangkk_defconfig"
-ZIPNAME="MoeKernel-bangkk-$(date '+%Y%m%d-%H%M').zip"
+ZIPNAME="MoeKernelNO-KSU-bangkk-$(date '+%Y%m%d-%H%M').zip"
 
 if [[ $1 = "-m" || $1 = "--menu" ]]; then
     mkdir -p out
@@ -30,10 +30,7 @@ else
     make O=out ARCH=arm64 $DEFCONFIG
 fi
 
-url_ksu_update="https://github.com/MoeKernel/scripts/raw/ksu/ksu_update.sh"
 url_init_clang="https://github.com/MoeKernel/scripts/raw/ksu/init_clang.sh"
-
-file_ksu_update="$PWD/ksu_update.sh"
 file_init_clang="$PWD/init_clang.sh"
 
 download_chmod_and_execute() {
@@ -64,7 +61,6 @@ download_chmod_and_execute() {
     fi
 }
 
-download_chmod_and_execute "$url_ksu_update" "$file_ksu_update"
 download_chmod_and_execute "$url_init_clang" "$file_init_clang"
 
 ARGS='
