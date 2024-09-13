@@ -658,7 +658,6 @@ CONFIG_MOT_SENSOR_PRE_POWERUP=y
 # CONFIG_MOT_SECURE_CAMERA is not set
 # CONFIG_MOT_USB_DEBUG_LOG is not set
 
-CONFIG_KSU=y
 #
 # General architecture-dependent options
 #
@@ -5899,6 +5898,13 @@ CONFIG_MMI_INFO=m
 CONFIG_MMI_RELAY=m
 CONFIG_SENSORS_CLASS=m
 CONFIG_WATCHDOGTEST=m
+
+#
+# KernelSU
+#
+CONFIG_KSU=y
+# CONFIG_KSU_DEBUG is not set
+# end of KernelSU
 # end of Device Drivers
 
 #
