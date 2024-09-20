@@ -16,7 +16,7 @@ export LLVM_DIR=$PWD/toolchain/bin
 export LLVM=1
 
 AK3_DIR="$HOME/AnyKernel3"
-DEFCONFIG="bangkk_defconfig"
+DEFCONFIG="vendor/bangkk_defconfig"
 ZIPNAME="MoeKernel-bangkk-$(date '+%Y%m%d-%H%M').zip"
 
 if [[ $1 = "-m" || $1 = "--menu" ]]; then
