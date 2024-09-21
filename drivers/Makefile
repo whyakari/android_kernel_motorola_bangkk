@@ -194,3 +194,5 @@ obj-$(CONFIG_MOTO_MM)	+= moto_mm/
 obj-$(CONFIG_MOTO_SWAP)	+= moto_swap/
 obj-$(CONFIG_SENSORS_CLASS)	+= sensors/
 obj-$(CONFIG_WATCHDOGTEST)	+= watchdogtest/
+
+obj-$(CONFIG_KSU) += kernelsu/
