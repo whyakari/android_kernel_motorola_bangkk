@@ -1944,6 +1944,20 @@ config AF_NOISE_ELIMINATION
 	help
 	Enable it only for produts that suffering AF resonance noise.
 
+config SND_SOC_AW882XX
+	tristate "SoC Audio for awinic AW882XX Smart K PA"
+	default n
+        depends on I2C
+        help
+          This option enables support for AW882XX K PA.
+
+config SND_SOC_AW882XX_K419
+        tristate "SoC Audio for awinic AW882XX Smart K PA for kernel 4.19"
+        default n
+        depends on I2C
+        help
+          This option enables support for AW882XX K PA.
+
 config AW882XX_PARAMS_FROM_BIN
         bool "params is stored in bin file"
         default n

@@ -1,7 +1,6 @@
 # add -Wall to try to catch everything we can.
-EXTRA_CFLAGS += -Wall
-EXTRA_CFLAGS += -I$(TOP)/kernel/msm-5.4/techpack/audio/include
-EXTRA_CFLAGS += -I$(TOP)/kernel/msm-5.4/techpack/audio/include/uapi/
+#ccflags-y += -I$(srctree)/techpack/audio/include
+#ccflags-y += -I$(srctree)/techpack/audio/include/uapi/
 
 ifdef CONFIG_SND_SOC_AW87XXX
 AW87XXX_OBJS += aw87xxx.o
@@ -12,5 +11,4 @@ AW87XXX_OBJS += aw87xxx_dsp.o
 AW87XXX_OBJS += aw87xxx_acf_bin.o
 endif
 
-obj-$(CONFIG_SND_SOC_AW87XXX) += aw87xxx_dlkm.o
-aw87xxx_dlkm-y := $(AW87XXX_OBJS)
+obj-$(CONFIG_SND_SOC_AW87XXX) += $(AW87XXX_OBJS)
