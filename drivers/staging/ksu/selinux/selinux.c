@@ -136,7 +136,7 @@ u32 ksu_get_zygote_sid(void)
 {
 	u32 zygote_sid = 0;
 	int err = security_secctx_to_secid("u:r:zygote:s0", strlen("u:r:zygote:s0"),
-					&zygote_sid);
+					   &zygote_sid);
 	if (err) {
 		pr_info("get zygote sid err %d\n", err);
 	}

@@ -2274,28 +2274,15 @@ seqretry:
 			continue;
 		if (d_unhashed(dentry))
 			continue;
-
-		if (unlikely(parent->d_flags & DCACHE_OP_COMPARE)) {
-			int tlen;
-			const char *tname;
-			if (dentry->d_name.hash != hashlen_hash(hashlen))
+		if (dentry->d_name.hash_len != hashlen)
+			continue;
+		if (dentry_cmp(dentry, str, hashlen_len(hashlen)) != 0)
+			continue;
+#ifdef CONFIG_KSU_SUSFS_SUS_PATH
+			if (dentry->d_inode && unlikely(dentry->d_inode->i_state & 16777216) && likely(current_cred()->user->android_kabi_reserved1 & 16777216)) {
 				continue;
-			tlen = dentry->d_name.len;
-			tname = dentry->d_name.name;
-			/* we want a consistent (name,len) pair */
-			if (read_seqcount_retry(&dentry->d_seq, seq)) {
-				cpu_relax();
-				goto seqretry;
 			}
-			if (parent->d_op->d_compare(dentry,
-						    tlen, tname, name) != 0)
-				continue;
-		} else {
-			if (dentry->d_name.hash_len != hashlen)
-				continue;
-			if (dentry_cmp(dentry, str, hashlen_len(hashlen)) != 0)
-				continue;
-		}
+#endif
 		*seqp = seq;
 		return dentry;
 	}
@@ -2377,6 +2364,12 @@ struct dentry *__d_lookup(const struct dentry *parent, const struct qstr *name)
 
 		if (dentry->d_name.hash != hash)
 			continue;
+
+#ifdef CONFIG_KSU_SUSFS_SUS_PATH
+		if (dentry->d_inode && unlikely(dentry->d_inode->i_state & 16777216) && likely(current_cred()->user->android_kabi_reserved1 & 16777216)) {
+			continue;
+		}
+#endif
 
 		spin_lock(&dentry->d_lock);
 		if (dentry->d_parent != parent)
