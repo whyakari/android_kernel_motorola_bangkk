@@ -102,6 +102,7 @@ extern struct cpumask __cpu_isolated_mask;
 #define cpu_isolated_mask ((const struct cpumask *)&__cpu_isolated_mask)
 #endif
 
+extern const struct cpumask *const cpu_lp_mask;
 extern atomic_t __num_online_cpus;
 
 #if NR_CPUS > 1
