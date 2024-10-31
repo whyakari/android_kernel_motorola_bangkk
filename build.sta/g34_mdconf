@@ -1,7 +1,0 @@
-modules_to_nuke=(
-tas2562
-tas2560_calib
-snd_smartpa_aw882xx
-tas2560_algo
-tas2560
-)
