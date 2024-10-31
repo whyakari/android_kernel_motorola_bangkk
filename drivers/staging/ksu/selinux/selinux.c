@@ -76,7 +76,7 @@ bool getenforce()
 /*
  * get the subjective security ID of the current task
  */
-static inline u32 current_sid(void)
+static inline u32 current_sid_ksu(void)
 {
 	const struct task_security_struct *tsec = current_security();
 
@@ -89,7 +89,7 @@ bool is_ksu_domain()
 	char *domain;
 	u32 seclen;
 	bool result;
-	int err = security_secid_to_secctx(current_sid(), &domain, &seclen);
+	int err = security_secid_to_secctx(current_sid_ksu(), &domain, &seclen);
 	if (err) {
 		return false;
 	}
