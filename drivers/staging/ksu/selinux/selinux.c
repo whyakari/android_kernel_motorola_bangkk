@@ -2,6 +2,9 @@
 #include "objsec.h"
 #include "linux/version.h"
 #include "../klog.h" // IWYU pragma: keep
+#ifndef KSU_COMPAT_USE_SELINUX_STATE
+#include "avc.h"
+#endif
 
 #define KERNEL_SU_DOMAIN "u:r:su:s0"
 
@@ -52,20 +55,32 @@ if (!is_domain_permissive) {
 void setenforce(bool enforce)
 {
 #ifdef CONFIG_SECURITY_SELINUX_DEVELOP
+#ifdef KSU_COMPAT_USE_SELINUX_STATE
 	selinux_state.enforcing = enforce;
+#else
+	selinux_enforcing = enforce;
+#endif
 #endif
 }
 
 bool getenforce()
 {
 #ifdef CONFIG_SECURITY_SELINUX_DISABLE
+#ifdef KSU_COMPAT_USE_SELINUX_STATE
 	if (selinux_state.disabled) {
+#else
+	if (selinux_disabled) {
+#endif
 		return false;
 	}
 #endif
 
 #ifdef CONFIG_SECURITY_SELINUX_DEVELOP
+#ifdef KSU_COMPAT_USE_SELINUX_STATE
 	return selinux_state.enforcing;
+#else
+	return selinux_enforcing;
+#endif
 #else
 	return true;
 #endif
@@ -115,6 +130,23 @@ bool is_zygote(void *sec)
 	security_release_secctx(domain, seclen);
 	return result;
 }
+
+#ifdef CONFIG_KSU_SUSFS_SUS_MOUNT
+u32 ksu_get_zygote_sid(void)
+{
+	u32 zygote_sid = 0;
+	int err = security_secctx_to_secid("u:r:zygote:s0", strlen("u:r:zygote:s0"),
+					&zygote_sid);
+	if (err) {
+		pr_info("get zygote sid err %d\n", err);
+	}
+	return zygote_sid;
+}
+
+u32 ksu_get_current_sid(void) {
+	return current_sid_ksu();
+}
+#endif
 
 #define DEVPTS_DOMAIN "u:object_r:ksu_file:s0"
 
