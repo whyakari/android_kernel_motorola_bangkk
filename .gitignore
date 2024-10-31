@@ -9,6 +9,7 @@
 #
 # Normal rules (sorted alphabetically)
 #
+*.rej
 .*
 *.a
 *.asn1.[ch]
