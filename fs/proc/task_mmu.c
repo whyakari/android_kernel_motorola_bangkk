@@ -27,10 +27,6 @@
 #include <asm/tlbflush.h>
 #include "internal.h"
 
-#ifdef CONFIG_KSU_SUSFS
-#include <linux/susfs.h>
-#endif
-
 #define SEQ_PUT_DEC(str, val) \
 		seq_put_decimal_ull_width(m, str, (val) << (PAGE_SHIFT-10), 8)
 void task_mem(struct seq_file *m, struct mm_struct *mm)
@@ -363,10 +359,6 @@ show_map_vma(struct seq_file *m, struct vm_area_struct *vma)
 	unsigned long start, end;
 	dev_t dev = 0;
 	const char *name = NULL;
-#ifdef CONFIG_KSU_SUSFS_SUS_MAPS
-	char tmpname[SUSFS_MAX_LEN_PATHNAME];
-	int ret = 0;
-#endif
 
 	if (file) {
 		struct inode *inode = file_inode(vma->vm_file);

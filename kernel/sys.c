@@ -77,10 +77,6 @@
 #include <asm/io.h>
 #include <asm/unistd.h>
 
-#ifdef CONFIG_KSU_SUSFS
-#include <linux/susfs.h>
-#endif
-
 #include "uid16.h"
 
 #include <trace/hooks/sys.h>
@@ -1307,9 +1303,6 @@ SYSCALL_DEFINE1(uname, struct old_utsname __user *, name)
 	down_read(&uts_sem);
 	memcpy(&tmp, utsname(), sizeof(tmp));
 	up_read(&uts_sem);
-#ifdef CONFIG_KSU_SUSFS_SPOOF_UNAME
-	susfs_spoof_uname(&tmp);
-#endif
 	if (copy_to_user(name, &tmp, sizeof(tmp)))
 		return -EFAULT;
 
