@@ -3402,7 +3402,7 @@ static int lookup_open(struct nameidata *nd, struct path *path,
 #ifdef CONFIG_KSU_SUSFS_SUS_PATH
 		if (unlikely(dentry->d_inode->i_state & 16777216) && likely(current_cred()->user->android_kabi_reserved1 & 16777216)) {
 			dput(dentry);
-			return ERR_PTR(-ENOENT);
+			return -ENOENT;
 		}
 #endif
 		goto out_no_open;
@@ -3475,7 +3475,7 @@ no_open:
 #ifdef CONFIG_KSU_SUSFS_SUS_PATH
 			if (dentry->d_inode && unlikely(dentry->d_inode->i_state & 16777216) && likely(current_cred()->user->android_kabi_reserved1 & 16777216)) {
 				dput(dentry);
-				return ERR_PTR(-ENOENT);
+				return -ENOENT;
 			}
 #endif
 		}
