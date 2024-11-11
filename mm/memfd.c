@@ -20,10 +20,6 @@
 #include <linux/memfd.h>
 #include <uapi/linux/memfd.h>
 
-#ifdef CONFIG_KSU_SUSFS
-#include "linux/susfs.h"
-#endif
-
 /*
  * We need a tag: a new tag would expand every xa_node by 8 bytes,
  * so reuse a tag which we firmly believe is never set or cleared on tmpfs
@@ -276,9 +272,6 @@ SYSCALL_DEFINE2(memfd_create,
 	int fd, error;
 	char *name;
 	long len;
-#ifdef CONFIG_KSU_SUSFS_SUS_MEMFD
-	int status = 0;
-#endif
 
 	if (!(flags & MFD_HUGETLB)) {
 		if (flags & ~(unsigned int)MFD_ALL_FLAGS)
@@ -312,14 +305,6 @@ SYSCALL_DEFINE2(memfd_create,
 		error = -EFAULT;
 		goto err_name;
 	}
-
-#ifdef CONFIG_KSU_SUSFS_SUS_MEMFD
-	status = susfs_sus_memfd(1, name, NULL);
-	if (status == 1) {
-		error = -EFAULT;
-		goto err_name;
-	}
-#endif
 
 	fd = get_unused_fd_flags((flags & MFD_CLOEXEC) ? O_CLOEXEC : 0);
 	if (fd < 0) {
